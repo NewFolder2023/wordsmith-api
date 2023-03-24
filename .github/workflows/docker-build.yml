@@ -9,6 +9,7 @@ jobs:
     name: Call Docker Build
     uses: newfolder2023/actions/.github/workflows/reusable-docker-build.yaml@main
     permissions:
+      contents: read
       packages: write
       pull-requests: write
     with:
