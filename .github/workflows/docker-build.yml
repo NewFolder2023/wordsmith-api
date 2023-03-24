@@ -20,6 +20,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set Environments
+        id: environment
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v4
@@ -27,14 +31,14 @@ jobs:
           images: |
             ghcr.io/newfolder2023/wordsmith-api
           tags: |
-            {{$(git rev-parse --short HEAD)}}
+            ${{ steps.environment.outputs.sha_short }}
             latest
-          
+
       - name: Docker build
         uses: docker/build-push-action@v4
         with:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:latest
+          cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:${{ steps.environment.outputs.sha_short }}
           cache-to: type=inline
