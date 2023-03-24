@@ -22,7 +22,7 @@ jobs:
 
       - name: Set Environments
         id: environment
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_STATE
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -31,7 +31,7 @@ jobs:
           images: |
             ghcr.io/newfolder2023/wordsmith-api
           tags: |
-            ${{ steps.environment.outputs.sha_short }}
+            ${{ steps.environment.outputs.SHA_SHORT }}
             latest
 
       - name: Docker build
@@ -40,5 +40,5 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:${{ steps.environment.outputs.sha_short }}
+          cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:${{ steps.environment.outputs.SHA_SHORT }}
           cache-to: type=inline
