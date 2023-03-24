@@ -12,4 +12,4 @@ jobs:
       packages: write
       pull-requests: write
     with:
-      image-name: ghcr.io/newfolder2023/wordsmith-api
+      image-names: ghcr.io/newfolder2023/wordsmith-api
