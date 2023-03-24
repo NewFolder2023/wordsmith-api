@@ -19,11 +19,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/newfolder2023/wordsmith-api
+          tags: |
+            $(git rev-parse --short HEAD)
+            latest
+          
       - name: Docker build
         uses: docker/build-push-action@v4
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/newfolder2023/wordsmith-api:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:latest
           cache-to: type=inline
