@@ -1,9 +1,9 @@
 name: Docker Build
 on:
-push:
-  branches:
-    - main
+  push:
+    branches: [main]
   pull_request:
+
 jobs:
   call-docker-build:
     name: Call Docker Build
