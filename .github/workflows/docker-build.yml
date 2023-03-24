@@ -25,3 +25,5 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/newfolder2023/wordsmith-api:latest
+          cache-from: type=registry,ref=ghcr.io/newfolder2023/wordsmith-api:latest
+          cache-to: type=inline
