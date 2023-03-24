@@ -17,3 +17,4 @@ The demo runs across three apps:
 [BretFisher/wordsmith](https://github.com/BretFisher/wordsmith)
 
 ## Lest test cache in docker build
+Test image tag
