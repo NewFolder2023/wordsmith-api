@@ -14,3 +14,8 @@ jobs:
       pull-requests: write
     with:
       image-names: ghcr.io/newfolder2023/wordsmith-api
+      tag-rules: |
+        type=ref,event=branch
+        type=ref,event=pr
+        type=semver,pattern={{version}}
+        type=sha
